@@ -13,14 +13,31 @@ class SoilMoisturePage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Location: 2302 Mount Way, Montgomery, Alabama, 31712',),
-            Text('Crop Type: Maize',),
+            Text('Location: 2302 Mount Way, Montgomery, Alabama, 31712',style: TextStyle(fontSize: 20)),
             SizedBox(height: 16),
-            Text('Current Soil Moisture: 60.3',),
-            Text('Last Updated: 31/07/2024 & 13:04:30',),
+            Text('Crop Type: Maize',style: TextStyle(fontSize: 20)),
             SizedBox(height: 16),
-            ElevatedButton(onPressed: () {}, child: Text('View Historical Data')),
-            ElevatedButton(onPressed: () {}, child: Text('Set Moisture Threshold')),
+            Text('Current Soil Moisture: 60.3',style: TextStyle(fontSize: 20)),
+            SizedBox(height: 16),
+            Text('Last Updated: 31/07/2024 & 13:04:30',style: TextStyle(fontSize: 20)),
+            SizedBox(height: 36),
+            Center(
+                  child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                ElevatedButton(
+                        onPressed: () {},
+                        child: Text('View Historical Data'),
+                ),
+            SizedBox(height: 16), // Adds space between the buttons
+                ElevatedButton(
+                        onPressed: () {},
+                        child: Text('Set Moisture Threshold'),
+                ),
+                    ],
+              ),
+              )
+
           ],
         ),
       ),

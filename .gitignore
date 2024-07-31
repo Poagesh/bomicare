@@ -41,3 +41,34 @@ app.*.map.json
 /android/app/debug
 /android/app/profile
 /android/app/release
+# Flutter/Dart/Pub related
+.dart_tool/
+.flutter-plugins
+.flutter-plugins-dependencies
+.packages
+.pub-cache/
+build/
+.idea/
+
+# Android related
+.gradle/
+.idea/
+*.iml
+*.hprof
+local.properties
+
+# iOS related
+.generated/
+.target/
+Pods/
+.xcenv
+*.xcodeproj
+xcuserdata/
+*.xcworkspace
+
+# VS Code related
+.vscode/
+
+# Other
+.DS_Store
+*.log

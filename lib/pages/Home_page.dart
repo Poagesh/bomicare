@@ -7,12 +7,12 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Home', style: TextStyle(color: Color(0xFF556B2F))),
-        backgroundColor: Color(0xFF90EE90),
+        title: Text('Home', style: TextStyle(color: Color.fromARGB(255, 14, 41, 0))),
+        backgroundColor: Colors.white,
         actions: [
           IconButton(
             icon: Icon(Icons.person),
-            color: Color(0xFF556B2F),
+            color: Color.fromARGB(255, 6, 34, 0),
             onPressed: () {
               Navigator.push(
                 context,
@@ -28,28 +28,30 @@ class HomePage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(height: 16),
-            Text('Current Location: 2302 Mount Way, Montgomery, Alabama, 31712', style: TextStyle(color: Color(0xFF556B2F))),
+            Text('Current Location: 2302 Mount Way, Montgomery, Alabama, 31712', style: TextStyle(fontSize: 20)),
+            SizedBox(height: 16),
             Row(
               children: [
-                Text('Weather: ', style: TextStyle(color: Color(0xFF556B2F))),
-                Icon(Icons.wb_sunny, color: Color(0xFF556B2F)),
+                Text('Weather: ', style: TextStyle(fontSize: 20)),
+                SizedBox(height: 40),
+                Icon(Icons.wb_sunny, color: Color(0xFF556B2F), size: 40,),
               ],
             ),
-            Text('Temp: 32°C  |  Humidity: 60.3', style: TextStyle(color: Color(0xFF556B2F))),
-            SizedBox(height: 16),
-            ElevatedButton(onPressed: () {}, child: Text('View Forecast')),
-            ElevatedButton(onPressed: () {}, child: Text('Soil Moisture')),
-            ElevatedButton(onPressed: () {}, child: Text('Irrigation Recommendations')),
-            ElevatedButton(onPressed: () {}, child: Text('Alerts & Notifications')),
-            ElevatedButton(
-              onPressed: () {
-                Navigator.push(
+            SizedBox(height: 30),
+            Text('Temp: 32°C  |  Humidity: 60.3', style: TextStyle(fontSize: 20)),
+            SizedBox(height: 200),
+            
+            Center(
+                  child: ElevatedButton(
+                  onPressed: () {
+                  Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => AddCropPage()), // Navigate to AddCropPage
-                );
-              },
+                    );
+                  },
               child: Text('Add Crop'),
-            ),
+              ),
+              )
           ],
         ),
       ),

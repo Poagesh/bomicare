@@ -13,12 +13,15 @@ class AlertsNotificationsPage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Recent Alerts:',),
-            Text('- Alert 1: Its 6:00 AM time to water the crops!',),
-            Text('- Alert 2: Today is a Sunny day! The Temperature is 32°C.',),
-            Text('- Alert 3: The crops are ready to add the Fertilizers!',),
+            Text('Recent Alerts:',style: TextStyle(fontSize: 23)),
+            SizedBox(height: 20),
+            Text('Alert 1: Its 6:00 AM time to water the crops!',style: TextStyle(fontSize: 20),),
             SizedBox(height: 16),
-            ElevatedButton(onPressed: () {}, child: Text('Set Notification Preferences')),
+            Text('Alert 2: Today is a Sunny day! The Temperature is 32°C.',style: TextStyle(fontSize: 20)),
+            SizedBox(height: 16),
+            Text('Alert 3: The crops are ready to add the Fertilizers!',style: TextStyle(fontSize: 20)),
+            SizedBox(height: 40),
+            Center(child: ElevatedButton(onPressed: () {}, child: Text('Set Notification Preferences'),),)
           ],
         ),
       ),
