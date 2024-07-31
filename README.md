@@ -1,6 +1,6 @@
-# BomiCare
+# BoomiCare
 
-BomiCare is a Flutter application designed to help farmers with crop recommendations based on soil properties, weather data, and location. The app allows users to add crop details, upload soil images, and get recommendations on suitable crops to grow. It also provides weather updates for the locations where crops are planted.
+BoomiCare is a Flutter application designed to help farmers with crop recommendations based on soil properties, weather data, and location. The app allows users to add crop details, upload soil images, and get recommendations on suitable crops to grow. It also provides weather updates for the locations where crops are planted.
 
 ## Features
 
@@ -86,6 +86,19 @@ BomiCare is a Flutter application designed to help farmers with crop recommendat
     ```bash
     flutter run
     ```
+6. **Run the Local Server**
+
+    Download the python latest version
+   
+   ```bash
+    pip install pandas numpy matplotlib seaborn scikit-learn
+    ```
+   Run the Flask_api.py
+   
+   ```bash
+    python Flask_api.py
+    ```
+   
 
 ## Project Structure
 
