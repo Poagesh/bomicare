@@ -26,12 +26,10 @@ class WeatherForecastPage extends StatelessWidget {
                 Text('Day 2: 02/08/2024 29°C', style: TextStyle(fontSize: 20)),
             SizedBox(height: 8), // Adds space between the texts
                 Text('Day 3: 03/08/2024 30°C', style: TextStyle(fontSize: 20)),
-    ],
-  ),
-)
-
-            // Add more days as needed
-          ],
+                ],
+                ),
+                )
+        ],
         ),
       ),
     );
