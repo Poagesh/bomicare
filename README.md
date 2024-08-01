@@ -118,4 +118,97 @@ BoomiCare is a Flutter application designed to help farmers with crop recommenda
 │   ├── main.dart
 ├── pubspec.yaml
 └── README.md
+```
+- **main.dart**: Entry point of the application.
+- **add_crop_page.dart**: UI and logic for adding soil data and getting crop recommendations.
+- **moisture_page.dart**: UI for displaying soil moisture and last updated time.
+- **weather_page.dart**: UI for displaying weather forecast.
+
+## Detailed Guide
+
+### Adding Crop Data
+
+1. **Navigate to the "Add Crop" page.**
+2. **Input the soil data and address details:**
+    - **Nitrogen amount** (N)
+    - **Phosphorus amount** (P)
+    - **Potassium amount** (K)
+    - **Temperature**
+    - **Humidity**
+    - **Rainfall**
+    - **pH value**
+    - **Address line 1**
+    - **Address line 2**
+    - **Address line 3**
+    - **Pincode**
+    - **Area**
+
+3. **Upload a soil image** (optional):
+    - Click on "Upload Soil Image" to select an image from your gallery.
+
+4. **Save Address**:
+    - Click on "Save Address" to save the address details.
+
+5. **Get Crop Recommendation**:
+    - Click on "Get Crop Recommendation" to get a recommended crop based on the input data.
+
+### Viewing Weather Forecast
+
+1. **Navigate to the "Weather Forecast" page.**
+2. **Automatic Weather Data Fetch**:
+    - The app will automatically fetch the weather data based on the current location.
+3. **View Weather Forecast**:
+    - The weather forecast for the next three days with temperature and weather icons will be displayed.
+
+### Monitoring Soil Moisture
+
+1. **Navigate to the "Soil Moisture" page.**
+2. **View Soil Moisture Data**:
+    - The app will display the current soil moisture and the last updated time.
+3. **Additional Options**:
+    - **View Historical Data**: Click to view past soil moisture data.
+    - **Set Moisture Threshold**: Click to set a threshold for soil moisture.
+
+## API Integration
+
+### Crop Recommendation API
+
+The app makes a POST request to the `/predict` endpoint to get crop recommendations. Ensure that the API server is running and accessible.
+
+```plaintext
+POST http://10.0.2.2:5000/predict
+Content-Type: application/json
+
+{
+  "N": <nitrogen_value>,
+  "P": <phosphorus_value>,
+  "K": <potassium_value>,
+  "temperature": <temperature_value>,
+  "humidity": <humidity_value>,
+  "ph": <ph_value>,
+  "rainfall": <rainfall_value>
+}
+```
+**Weather Data API**
+The app fetches weather data from the Open Meteo API based on the current location. Ensure that your device has internet access to fetch the data.
+
+Example API Call:
+```plaintext
+GET https://api.open-meteo.com/v1/forecast?latitude=<latitude>&longitude=<longitude>&daily=temperature_2m_max&start=<start_date>&end=<end_date>&timezone=Asia/Kolkata
+```
+
+**Troubleshooting**
+Location Services: Ensure that location services are enabled on your device.
+Network Calls: Make sure that your API server is running and accessible.
+Dependencies: Run flutter pub get to install all required dependencies.
+
+
+**Acknowledgments**
+Open Meteo for providing weather data.
+Geolocator package for location services.
+Flutter team for the awesome framework.
+
+**Contact**
+If you have any questions or feedback, please reach out to poagesh59@gmail.com.
+
 
