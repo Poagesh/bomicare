@@ -1,10 +1,10 @@
+import 'package:flutter/material.dart';
+import 'package:bomicare/Components/Navigation_bar.dart';
 import 'package:bomicare/pages/Alert_page.dart';
 import 'package:bomicare/pages/Home_page.dart';
 import 'package:bomicare/pages/Moisture_page.dart';
 import 'package:bomicare/pages/Recommendation_page.dart';
 import 'package:bomicare/pages/Weather_page.dart';
-import 'package:flutter/material.dart';
-import 'package:bomicare/Components/Navigation_bar.dart';
 
 class MainPage extends StatefulWidget {
   @override
@@ -13,13 +13,11 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
   int _selectedIndex = 0;
-  final List<Widget> _pages = [
-    HomePage(),
-    WeatherForecastPage(),
-    SoilMoisturePage(),
-    IrrigationRecommendationsPage(),
-    AlertsNotificationsPage(),
-  ];
+  Map<String, String> addressDetails = {
+    'address1': '2302 Mount Way',
+    'address2': 'Montgomery',
+    'address3': 'Alabama, 31712',
+  };
 
   void _onTabChange(int index) {
     setState(() {
@@ -27,8 +25,22 @@ class _MainPageState extends State<MainPage> {
     });
   }
 
+  void updateAddress(Map<String, String> newAddressDetails) {
+    setState(() {
+      addressDetails = newAddressDetails;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
+    final List<Widget> _pages = [
+      HomePage(addressDetails: addressDetails, updateAddress: updateAddress),
+      WeatherPage(addressDetails: addressDetails),
+      MoisturePage(addressDetails: addressDetails),
+      RecommendationPage(addressDetails: addressDetails),
+      AlertPage(addressDetails: addressDetails),
+    ];
+
     return Scaffold(
       body: _pages[_selectedIndex],
       bottomNavigationBar: Navigation_Bar(

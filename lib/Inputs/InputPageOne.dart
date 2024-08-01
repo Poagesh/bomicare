@@ -1,3 +1,5 @@
+// InputPageOne.dart
+
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -5,6 +7,10 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 class AddCropPage extends StatefulWidget {
+  final Function(Map<String, String>) updateAddress;
+
+  AddCropPage({required this.updateAddress});
+
   @override
   _AddCropPageState createState() => _AddCropPageState();
 }
@@ -34,6 +40,18 @@ class _AddCropPageState extends State<AddCropPage> {
     final pickedImage = await _picker.pickImage(source: ImageSource.gallery);
     setState(() {
       _image = pickedImage;
+    });
+  }
+
+  Map<String, String> addressDetails = {};
+
+  void saveAddressDetails() {
+    setState(() {
+      addressDetails['address1'] = address1Controller.text;
+      addressDetails['address2'] = address2Controller.text;
+      addressDetails['address3'] = address3Controller.text;
+      addressDetails['pincode'] = pincodeController.text;
+      widget.updateAddress(addressDetails);
     });
   }
 
@@ -106,22 +124,40 @@ class _AddCropPageState extends State<AddCropPage> {
                     ),
             ),
             SizedBox(height: 16),
-            buildTextField(nitrogenController, 'Nitrogen amount', TextInputType.number),
-            buildTextField(phosphorusController, 'Phosphorus amount', TextInputType.number),
-            buildTextField(potassiumController, 'Potassium amount', TextInputType.number),
-            buildTextField(temperatureController, 'Temperature', TextInputType.numberWithOptions(decimal: true)),
-            buildTextField(humidityController, 'Humidity', TextInputType.numberWithOptions(decimal: true)),
-            buildTextField(rainfallController, 'Rainfall', TextInputType.numberWithOptions(decimal: true)),
-            buildTextField(phController, 'pH value', TextInputType.numberWithOptions(decimal: true)),
-            buildTextField(address1Controller, 'Address line 1', TextInputType.text),
-            buildTextField(address2Controller, 'Address line 2', TextInputType.text),
-            buildTextField(address3Controller, 'Address line 3', TextInputType.text),
+            buildTextField(
+                nitrogenController, 'Nitrogen amount', TextInputType.number),
+            buildTextField(phosphorusController, 'Phosphorus amount',
+                TextInputType.number),
+            buildTextField(
+                potassiumController, 'Potassium amount', TextInputType.number),
+            buildTextField(temperatureController, 'Temperature',
+                TextInputType.numberWithOptions(decimal: true)),
+            buildTextField(humidityController, 'Humidity',
+                TextInputType.numberWithOptions(decimal: true)),
+            buildTextField(rainfallController, 'Rainfall',
+                TextInputType.numberWithOptions(decimal: true)),
+            buildTextField(phController, 'pH value',
+                TextInputType.numberWithOptions(decimal: true)),
+            buildTextField(
+                address1Controller, 'Address line 1', TextInputType.text),
+            buildTextField(
+                address2Controller, 'Address line 2', TextInputType.text),
+            buildTextField(
+                address3Controller, 'Address line 3', TextInputType.text),
             buildTextField(pincodeController, 'Pincode', TextInputType.number),
-            buildTextField(areaController, 'Area', TextInputType.numberWithOptions(decimal: true)),
+            buildTextField(areaController, 'Area',
+                TextInputType.numberWithOptions(decimal: true)),
+            SizedBox(height: 16),
+            ElevatedButton(
+              onPressed: saveAddressDetails,
+              child: Text('Save Address'),
+            ),
             SizedBox(height: 16),
             ElevatedButton(
               onPressed: getRecommendation,
-              child: isLoading ? CircularProgressIndicator() : Text('Get Crop Recommendation'),
+              child: isLoading
+                  ? CircularProgressIndicator()
+                  : Text('Get Crop Recommendation'),
             ),
             SizedBox(height: 16),
             DropdownButton<String>(
@@ -145,7 +181,8 @@ class _AddCropPageState extends State<AddCropPage> {
     );
   }
 
-  Widget buildTextField(TextEditingController controller, String labelText, TextInputType keyboardType) {
+  Widget buildTextField(TextEditingController controller, String labelText,
+      TextInputType keyboardType) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 16.0),
       child: TextField(

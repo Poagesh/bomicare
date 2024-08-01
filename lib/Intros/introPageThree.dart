@@ -10,6 +10,11 @@ class IntroPageThree extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+        final Map<String, String> addressDetails = {
+      'address1': '2302 Mount Way',
+      'address2': 'Montgomery',
+      'address3': 'Alabama, 31712',
+    };
     return Scaffold(
       backgroundColor: Color.fromARGB(255, 251, 255, 0),
       body: Stack(
@@ -87,7 +92,12 @@ class IntroPageThree extends StatelessWidget {
               onTap: () => Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => HomePage(), // Make sure HomePage is properly defined
+                   builder: (context) => HomePage(
+                    addressDetails: addressDetails,
+                    updateAddress: (newAddressDetails) {
+                      // Placeholder for update logic (can be implemented elsewhere)
+                    },
+                  ) // Make sure HomePage is properly defined
                 ),
               ),
               child: Container(

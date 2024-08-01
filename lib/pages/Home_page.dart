@@ -1,8 +1,18 @@
 import 'package:bomicare/Inputs/InputPageOne.dart';
+import 'package:flutter/material.dart';
 import 'package:bomicare/UserInfos/UserProfile_Page.dart';
-import 'package:flutter/material.dart'; 
 
 class HomePage extends StatelessWidget {
+  final Map<String, String> addressDetails;
+  final Function(Map<String, String>) updateAddress;
+
+  HomePage({this.addressDetails = const {
+    'address1': 'Unknown',
+    'address2': 'Unknown',
+    'address3': 'Unknown',
+    'pincode' : 'Unknown',
+  }, required this.updateAddress});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -28,34 +38,41 @@ class HomePage extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             SizedBox(height: 16),
-            Text('Current Location: 2302 Mount Way, Montgomery, Alabama, 31712', style: TextStyle(fontSize: 20)),
+            Text(
+              'Current Location: ${addressDetails['address1']}, ${addressDetails['address2']}, ${addressDetails['address3']}, ${addressDetails['pincode']}',
+              style: TextStyle(fontSize: 20),
+            ),
             SizedBox(height: 16),
             Row(
               children: [
                 Text('Weather: ', style: TextStyle(fontSize: 20)),
                 SizedBox(height: 40),
-                Icon(Icons.wb_sunny, color: Color(0xFF556B2F), size: 40,),
+                Icon(
+                  Icons.wb_sunny,
+                  color: Color(0xFF556B2F),
+                  size: 40,
+                ),
               ],
             ),
             SizedBox(height: 30),
             Text('Temp: 32°C  |  Humidity: 60.3', style: TextStyle(fontSize: 20)),
             SizedBox(height: 200),
-            
             Center(
-                  child: ElevatedButton(
-                  onPressed: () {
+              child: ElevatedButton(
+                onPressed: () {
                   Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => AddCropPage()), // Navigate to AddCropPage
-                    );
-                  },
-              child: Text('Add Crop'),
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => AddCropPage(updateAddress: updateAddress),
+                    ),
+                  );
+                },
+                child: Text('Add Crop'),
               ),
-              )
+            ),
           ],
         ),
       ),
-      // No NavigationBar here, it's handled in MainPage
     );
   }
 }

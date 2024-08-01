@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 
-class AlertsNotificationsPage extends StatelessWidget {
+class AlertPage extends StatelessWidget {
+  final Map<String, String> addressDetails;
+
+  AlertPage({required this.addressDetails});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Alerts & Notifications', style: TextStyle(color:  Color.fromARGB(255, 8, 65, 0))),
+        title: Text('Alerts', style: TextStyle(color: Color.fromARGB(255, 14, 41, 0))),
         backgroundColor: Colors.white,
       ),
       body: Padding(
@@ -13,15 +17,13 @@ class AlertsNotificationsPage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Recent Alerts:',style: TextStyle(fontSize: 23)),
-            SizedBox(height: 20),
-            Text('Alert 1: Its 6:00 AM time to water the crops!',style: TextStyle(fontSize: 20),),
             SizedBox(height: 16),
-            Text('Alert 2: Today is a Sunny day! The Temperature is 32°C.',style: TextStyle(fontSize: 20)),
+            Text(
+              'Current Location: ${addressDetails['address1']}, ${addressDetails['address2']}, ${addressDetails['address3']}',
+              style: TextStyle(fontSize: 20),
+            ),
             SizedBox(height: 16),
-            Text('Alert 3: The crops are ready to add the Fertilizers!',style: TextStyle(fontSize: 20)),
-            SizedBox(height: 40),
-            Center(child: ElevatedButton(onPressed: () {}, child: Text('Set Notification Preferences'),),)
+            // Alert details go here
           ],
         ),
       ),

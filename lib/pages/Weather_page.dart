@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
 
-class WeatherForecastPage extends StatelessWidget {
+class WeatherPage extends StatelessWidget {
+  final Map<String, String> addressDetails;
+
+  WeatherPage({required this.addressDetails});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Weather Forecast', style: TextStyle(color:  Color.fromARGB(255, 8, 65, 0))),
+        title: Text('Weather Forecast', style: TextStyle(color: Color.fromARGB(255, 8, 65, 0))),
         backgroundColor: Colors.white,
       ),
       body: Padding(
@@ -13,23 +17,26 @@ class WeatherForecastPage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Text('Location: 2302 Mount Way, Montgomery, Alabama, 31712',style: TextStyle(fontSize: 20) ),
+            Text(
+              'Current Location: ${addressDetails['address1']}, ${addressDetails['address2']}, ${addressDetails['address3']}, ${addressDetails['pincode']}',
+              style: TextStyle(fontSize: 20),
+            ),
             SizedBox(height: 16),
-            Text('Date: 31/07/2024',style: TextStyle(fontSize: 20)),
+            Text('Date: 31/07/2024', style: TextStyle(fontSize: 20)),
             SizedBox(height: 16),
             Center(
               child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Text('Day 1: 01/08/2024 32°C', style: TextStyle(fontSize: 20)),
-            SizedBox(height: 8), // Adds space between the texts
-                Text('Day 2: 02/08/2024 29°C', style: TextStyle(fontSize: 20)),
-            SizedBox(height: 8), // Adds space between the texts
-                Text('Day 3: 03/08/2024 30°C', style: TextStyle(fontSize: 20)),
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Text('Day 1: 01/08/2024 32°C', style: TextStyle(fontSize: 20)),
+                  SizedBox(height: 8),
+                  Text('Day 2: 02/08/2024 29°C', style: TextStyle(fontSize: 20)),
+                  SizedBox(height: 8),
+                  Text('Day 3: 03/08/2024 30°C', style: TextStyle(fontSize: 20)),
                 ],
-                ),
-                )
-        ],
+              ),
+            ),
+          ],
         ),
       ),
     );

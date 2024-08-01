@@ -8,8 +8,17 @@ import 'package:flutter/material.dart';
 class IntroPageFive extends StatelessWidget {
   const IntroPageFive({super.key});
 
+  
   @override
   Widget build(BuildContext context) {
+    final Map<String, String> addressDetails = {
+      'address1': '2302 Mount Way',
+      'address2': 'Montgomery',
+      'address3': 'Alabama, 31712',
+    };
+
+   
+  
     return Scaffold(
       backgroundColor: Color.fromARGB(255, 255, 136, 0),
       body: Stack(
@@ -87,7 +96,12 @@ class IntroPageFive extends StatelessWidget {
               onTap: () => Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => HomePage(), // Make sure HomePage is properly defined
+                 builder: (context) => HomePage(
+                    addressDetails: addressDetails,
+                    updateAddress: (newAddressDetails) {
+                      // Placeholder for update logic (can be implemented elsewhere)
+                    },
+                  )
                 ),
               ),
               child: Container(
