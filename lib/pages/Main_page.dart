@@ -19,6 +19,8 @@ class _MainPageState extends State<MainPage> {
     'address3': 'Alabama, 31712',
   };
 
+  final ValueNotifier<String> _recommendedCropNotifier = ValueNotifier<String>('');
+
   void _onTabChange(int index) {
     setState(() {
       _selectedIndex = index;
@@ -32,11 +34,20 @@ class _MainPageState extends State<MainPage> {
   }
 
   @override
+  void dispose() {
+    _recommendedCropNotifier.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final List<Widget> _pages = [
       HomePage(addressDetails: addressDetails, updateAddress: updateAddress),
       WeatherPage(addressDetails: addressDetails),
-      MoisturePage(addressDetails: addressDetails),
+      MoisturePage(
+        addressDetails: addressDetails,
+        recommendedCropNotifier: _recommendedCropNotifier,
+      ),
       RecommendationPage(addressDetails: addressDetails),
       AlertPage(addressDetails: addressDetails),
     ];

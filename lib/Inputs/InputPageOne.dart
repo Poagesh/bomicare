@@ -1,5 +1,3 @@
-// InputPageOne.dart
-
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
@@ -36,6 +34,8 @@ class _AddCropPageState extends State<AddCropPage> {
   XFile? _image;
   final ImagePicker _picker = ImagePicker();
 
+  final ValueNotifier<String> selectedCropNotifier = ValueNotifier<String>('');
+
   Future<void> _pickImage() async {
     final pickedImage = await _picker.pickImage(source: ImageSource.gallery);
     setState(() {
@@ -59,7 +59,6 @@ class _AddCropPageState extends State<AddCropPage> {
     setState(() {
       isLoading = true;
     });
-    print('Button pressed, starting network call');
 
     try {
       final response = await http.post(
@@ -78,17 +77,17 @@ class _AddCropPageState extends State<AddCropPage> {
         }),
       );
 
-      print('Network call completed');
-
       if (response.statusCode == 200) {
         setState(() {
           selectedCrop = jsonDecode(response.body)['crop'];
           crops.add(selectedCrop);
+          selectedCropNotifier.value = selectedCrop;
           isLoading = false;
         });
-        print('Crop recommendation received: $selectedCrop');
+
+        // If MoisturePage is already part of the widget tree, you can use setState or similar to update it.
+        // No navigation is performed in this example.
       } else {
-        print('Failed to get recommendation: ${response.statusCode}');
         throw Exception('Failed to get recommendation');
       }
     } catch (e) {

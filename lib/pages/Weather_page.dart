@@ -3,6 +3,7 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 import 'package:intl/intl.dart';
 import 'package:geolocator/geolocator.dart';
+import 'package:weather_icons/weather_icons.dart';
 
 class WeatherPage extends StatefulWidget {
   final Map<String, String> addressDetails;
@@ -18,6 +19,8 @@ class _WeatherPageState extends State<WeatherPage> {
   double? longitude;
   List<String> nextThreeDays = [];
   List<String> temperatures = [];
+  List<IconData> weatherIcons = [];
+  List<String> weatherDescriptions = [];
 
   @override
   void initState() {
@@ -29,7 +32,6 @@ class _WeatherPageState extends State<WeatherPage> {
     bool serviceEnabled;
     LocationPermission permission;
 
-    // Test if location services are enabled.
     serviceEnabled = await Geolocator.isLocationServiceEnabled();
     if (!serviceEnabled) {
       return Future.error('Location services are disabled.');
@@ -76,7 +78,7 @@ class _WeatherPageState extends State<WeatherPage> {
     ].map((date) => DateFormat('yyyy-MM-dd').format(date)).toList();
 
     final apiUrl =
-        'https://api.open-meteo.com/v1/forecast?latitude=$latitude&longitude=$longitude&daily=temperature_2m_max&start=${formattedDates[0]}&end=${formattedDates[3]}&timezone=Asia/Kolkata';
+        'https://api.open-meteo.com/v1/forecast?latitude=$latitude&longitude=$longitude&daily=temperature_2m_max,weathercode&start=${formattedDates[0]}&end=${formattedDates[3]}&timezone=Asia/Kolkata';
 
     try {
       final response = await http.get(Uri.parse(apiUrl));
@@ -87,9 +89,20 @@ class _WeatherPageState extends State<WeatherPage> {
               .sublist(1)
               .map((date) => DateFormat('dd/MM/yyyy').format(DateTime.parse(date)))
               .toList();
+
           temperatures = weatherData['daily']['temperature_2m_max']
               .sublist(1, 4)
               .map<String>((temp) => temp.toString() + "°C")
+              .toList();
+
+          weatherIcons = weatherData['daily']['weathercode']
+              .sublist(1, 4)
+              .map<IconData>((code) => getWeatherIcon(code))
+              .toList();
+
+          weatherDescriptions = weatherData['daily']['weathercode']
+              .sublist(1, 4)
+              .map<String>((code) => getWeatherDescription(code))
               .toList();
         });
       } else {
@@ -97,6 +110,58 @@ class _WeatherPageState extends State<WeatherPage> {
       }
     } catch (e) {
       print('Error fetching weather data: $e');
+    }
+  }
+
+  IconData getWeatherIcon(int weatherCode) {
+    if (weatherCode == 0) {
+      return WeatherIcons.day_sunny;
+    } else if (weatherCode == 1 || weatherCode == 2) {
+      return WeatherIcons.day_cloudy;
+    } else if (weatherCode == 3) {
+      return WeatherIcons.cloud;
+    } else if (weatherCode >= 45 && weatherCode <= 48) {
+      return WeatherIcons.fog;
+    } else if (weatherCode >= 51 && weatherCode <= 57) {
+      return WeatherIcons.rain_mix;
+    } else if (weatherCode >= 61 && weatherCode <= 67) {
+      return WeatherIcons.showers;
+    } else if (weatherCode >= 71 && weatherCode <= 77) {
+      return WeatherIcons.snow;
+    } else if (weatherCode >= 80 && weatherCode <= 82) {
+      return WeatherIcons.rain;
+    } else if (weatherCode >= 85 && weatherCode <= 86) {
+      return WeatherIcons.snow;
+    } else if (weatherCode >= 95) {
+      return WeatherIcons.thunderstorm;
+    } else {
+      return WeatherIcons.alien;
+    }
+  }
+
+  String getWeatherDescription(int weatherCode) {
+    if (weatherCode == 0) {
+      return 'Sunny';
+    } else if (weatherCode == 1 || weatherCode == 2) {
+      return 'Partly Cloudy';
+    } else if (weatherCode == 3) {
+      return 'Cloudy';
+    } else if (weatherCode >= 45 && weatherCode <= 48) {
+      return 'Foggy';
+    } else if (weatherCode >= 51 && weatherCode <= 57) {
+      return 'Drizzle';
+    } else if (weatherCode >= 61 && weatherCode <= 67) {
+      return 'Showers';
+    } else if (weatherCode >= 71 && weatherCode <= 77) {
+      return 'Snow';
+    } else if (weatherCode >= 80 && weatherCode <= 82) {
+      return 'Rain';
+    } else if (weatherCode >= 85 && weatherCode <= 86) {
+      return 'Snow';
+    } else if (weatherCode >= 95) {
+      return 'Thunderstorm';
+    } else {
+      return 'Unknown';
     }
   }
 
@@ -111,7 +176,7 @@ class _WeatherPageState extends State<WeatherPage> {
             style: TextStyle(color: Color.fromARGB(255, 8, 65, 0))),
         backgroundColor: Colors.white,
       ),
-      body: Padding(
+      body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -130,8 +195,26 @@ class _WeatherPageState extends State<WeatherPage> {
                   children: List.generate(3, (index) {
                     return Column(
                       children: [
-                        Text('Day ${index + 1}: ${nextThreeDays[index]} ${temperatures[index]}',
-                            style: TextStyle(fontSize: 20)),
+                        Row(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Expanded(
+                              child: Text(
+                                'Day ${index + 1}: ${nextThreeDays[index]}',
+                                style: TextStyle(fontSize: 20),
+                              ),
+                            ),
+                            SizedBox(width: 10),
+                            BoxedIcon(weatherIcons[index], size: 40, color: Colors.orange),
+                            SizedBox(width: 10),
+                            Expanded(
+                              child: Text(
+                                '${temperatures[index]} - ${weatherDescriptions[index]}',
+                                style: TextStyle(fontSize: 20),
+                              ),
+                            ),
+                          ],
+                        ),
                         SizedBox(height: 8),
                       ],
                     );
